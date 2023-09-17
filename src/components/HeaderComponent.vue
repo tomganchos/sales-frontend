@@ -110,13 +110,6 @@ header {
     }
   }
 }
-//@media (max-width: 508px) {
-//  header {
-//    h1.name {
-//      display: none;
-//    }
-//  }
-//}
 
 .location {
   display: none;

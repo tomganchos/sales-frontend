@@ -17,6 +17,10 @@ export default {
     FooterComponent,
     HeaderComponent,
     RouterView
+  },
+
+  mounted () {
+    console.log('process.env: %o', import.meta.env)
   }
 }
 </script>

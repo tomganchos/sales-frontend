@@ -1,5 +1,12 @@
 <template>
-  <div :key="item.id"
+  <Skeleton
+      v-if="skeleton"
+      width="160px"
+      height="160px"
+      borderRadius="40px"/>
+  <div
+      v-else
+      :key="item.id"
        :style="{ backgroundColor: item.color }"
        class="category">
     <span class="label"
@@ -24,9 +31,13 @@
 </template>
 
 <script>
+import Skeleton from 'primevue/skeleton'
 
 export default {
   name: "CategoryBlock",
+  components: {
+    Skeleton
+  },
   props: {
     item: {
       type: Object,
@@ -37,6 +48,10 @@ export default {
       default: false
     },
     label: {
+      type: Boolean,
+      default: false
+    },
+    skeleton: {
       type: Boolean,
       default: false
     }

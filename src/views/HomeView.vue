@@ -5,10 +5,12 @@
         <h2>{{ $t("retailers.title") }}</h2>
         <div class="category-list">
           <CategoryBlock
-              v-for="retailer in retailers"
+              v-for="retailer in cRetailers"
               :key="retailer.id"
               :item="retailer"
+              :skeleton="!retailer.id"
               description
+              @click="handleRetailerClick(retailer)"
           />
         </div>
       </div>
@@ -21,6 +23,7 @@
               :key="category.id"
               :item="category"
               label
+              @click="handleCategoryClick(category)"
           />
         </div>
       </div>
@@ -31,6 +34,8 @@
 <script lang="ts">
 
 import CategoryBlock from '@/components/CategoryBlock.vue'
+import {mapActions, mapState} from "pinia";
+import {useRetailersStore} from "@/stores/retailers";
 
 export default {
   name: 'HomeView',
@@ -40,64 +45,7 @@ export default {
   },
   data () {
     return {
-      retailers: [
-        {
-          id: 1,
-          name: 'Maxima',
-          logo: 'src/assets/logo/maxima.png',
-          color: '#ffffff',
-          discountCount: 65
-        },
-        {
-          id: 2,
-          name: 'Rimi',
-          logo: 'src/assets/logo/rimi.svg',
-          color: '#ed1c24',
-          discountCount: 60
-        },
-        {
-          id: 3,
-          name: 'Prisma',
-          logo: 'src/assets/logo/prisma.png',
-          color: '#00a650',
-          discountCount: 52
-        },
-        {
-          id: 4,
-          name: 'Coop',
-          logo: 'src/assets/logo/coop.svg',
-          color: '#ffffff',
-          discountCount: 50
-        },
-        {
-          id: 5,
-          name: 'Selver',
-          logo: 'src/assets/logo/selver.svg',
-          color: '#ffffff',
-          discountCount: 44
-        },
-        {
-          id: 6,
-          name: 'Grossi',
-          logo: 'src/assets/logo/grossi.svg',
-          color: '#ffffff',
-          discountCount: 41
-        },
-        {
-          id: 7,
-          name: 'Araxes',
-          logo: 'src/assets/logo/araxes.jpg',
-          color: '#992b44',
-          discountCount: 33
-        },
-        {
-          id: 8,
-          name: 'Lidl',
-          logo: 'src/assets/logo/lidl.svg',
-          color: '#0066af',
-          discountCount: 29
-        }
-      ],
+      emptyRetailers: [{}, {}, {}, {}, {}, {}, {}, {}],
 
       categories: [
         {
@@ -153,6 +101,36 @@ export default {
           name: 'pets_section'
         }
       ]
+    }
+  },
+  computed: {
+    ...mapState(useRetailersStore, {
+      retailers: 'list'
+    }),
+    cRetailers () {
+      if (this.retailers.length > 0) {
+        return this.retailers
+      } else {
+        return this.emptyRetailers
+      }
+    }
+  },
+  created() {
+    if(!this.retailers.length) {
+      this.getRetailers()
+    }
+  },
+  methods: {
+    ...mapActions(useRetailersStore, {
+      getRetailers: 'getList'
+    }),
+    handleRetailerClick(retailer: any) {
+      console.log('retailer: %o', retailer)
+      this.$router.push({ name: 'products', query: { r: retailer.id }})
+    },
+    handleCategoryClick(category: any) {
+      console.log('category: %o', category)
+      this.$router.push({ name: 'products', query: { c: category.id }})
     }
   }
 }
