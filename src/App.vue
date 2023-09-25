@@ -10,6 +10,9 @@
 import { RouterView } from 'vue-router'
 import HeaderComponent from '@/components/HeaderComponent.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
+import {mapActions} from "pinia";
+import {useRetailersStore} from "@/stores/retailers";
+import {useCategoriesStore} from "@/stores/categories";
 
 export default {
   name: 'App',
@@ -19,8 +22,20 @@ export default {
     RouterView
   },
 
+  created () {
+    this.getCategories()
+    this.getRetailers()
+  },
   mounted () {
     console.log('process.env: %o', import.meta.env)
+  },
+  methods: {
+    ...mapActions(useRetailersStore, {
+      getRetailers: 'getList'
+    }),
+    ...mapActions(useCategoriesStore, {
+      getCategories: 'getList'
+    }),
   }
 }
 </script>

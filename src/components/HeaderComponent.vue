@@ -24,6 +24,7 @@
         optionLabel="name"
         placeholder="Select a City"
         class="languages"
+        @change="selectLanguage"
     >
       <template #value="slotProps">
         <div class="suggestion">
@@ -56,11 +57,20 @@ export default {
   },
   data() {
     return {
-      selectedLanguage: { name: 'Eesti', value: 'ee' },
+      locale: this.$i18n.locale,
       languages: [
         { name: 'Eesti', value: 'ee' },
         { name: 'Русский', value: 'ru' }
-      ]
+      ],
+      selectedLanguage: { name: 'Eesti', value: 'ee' }
+    }
+  },
+  mounted() {
+    this.selectedLanguage = this.languages.find(item => item.value === this.$i18n.locale)
+  },
+  methods: {
+    selectLanguage(value) {
+      this.$i18n.locale = value.value.value
     }
   }
 }
@@ -119,14 +129,14 @@ header {
   height: 42px;
   display: none;
   align-items: center;
-  width: 100px;
+  width: 120px;
 
   :deep( .p-dropdown-trigger) {
     display: none;
   }
 
   .p-dropdown-label {
-    width: 100px;
+    width: 120px;
     display: flex;
     justify-content: center;
     align-items: center;

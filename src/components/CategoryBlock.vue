@@ -1,11 +1,13 @@
 <template>
   <Skeleton
       v-if="skeleton"
-      width="160px"
-      height="160px"
-      borderRadius="40px"/>
+      :width="styles.width"
+      :height="styles.height"
+      :borderRadius="styles.borderRadius"
+  />
   <div
       v-else
+      ref="category"
       :key="item.id"
        :style="{ backgroundColor: item.color }"
        class="category">
@@ -54,6 +56,29 @@ export default {
     skeleton: {
       type: Boolean,
       default: false
+    }
+  },
+  computed: {
+    styles() {
+      if (window.innerWidth >= 1240) {
+        return {
+          width: '160px',
+          height: '160px',
+          borderRadius: '40px'
+        }
+      } else if (window.innerWidth >= 800) {
+        return {
+          width: '120px',
+          height: '120px',
+          borderRadius: '30px'
+        }
+      } else {
+        return {
+          width: '80px',
+          height: '80px',
+          borderRadius: '20px'
+        }
+      }
     }
   }
 }

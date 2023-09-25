@@ -19,9 +19,10 @@
         <h2>{{ $t("categories.title") }}</h2>
         <div class="category-list">
           <CategoryBlock
-              v-for="category in categories"
+              v-for="category in cCategories"
               :key="category.id"
               :item="category"
+              :skeleton="!category.id"
               label
               @click="handleCategoryClick(category)"
           />
@@ -36,6 +37,7 @@
 import CategoryBlock from '@/components/CategoryBlock.vue'
 import {mapActions, mapState} from "pinia";
 import {useRetailersStore} from "@/stores/retailers";
+import {useCategoriesStore} from "@/stores/categories";
 
 export default {
   name: 'HomeView',
@@ -46,66 +48,15 @@ export default {
   data () {
     return {
       emptyRetailers: [{}, {}, {}, {}, {}, {}, {}, {}],
-
-      categories: [
-        {
-          id: 1,
-          name: 'produce_section',
-          image: 'src/images/01.jpg'
-        },
-        {
-          id: 2,
-          name: 'dairy_section',
-          image: 'src/images/02.jpg'
-        },
-        {
-          id: 3,
-          name: 'bakery_section',
-          image: 'src/images/03.jpg'
-        },
-        {
-          id: 4,
-          name: 'water_and_drinks',
-          image: 'src/images/04.jpg'
-        },
-        {
-          id: 5,
-          name: 'alcohol',
-          image: 'src/images/05.jpg'
-        },
-        {
-          id: 6,
-          name: 'snack_section',
-          image: 'src/images/06.jpg'
-        },
-        {
-          id: 7,
-          name: 'meat_poultry_fish',
-          image: 'src/images/07.jpg'
-        },
-        {
-          id: 8,
-          name: 'frozen_section',
-          image: 'src/images/08.jpg'
-        },
-        {
-          id: 10,
-          name: 'groceries'
-        },
-        {
-          id: 11,
-          name: 'for_children'
-        },
-        {
-          id: 12,
-          name: 'pets_section'
-        }
-      ]
+      emptyCategories: [{}, {}, {}, {}, {}, {}, {}, {}],
     }
   },
   computed: {
     ...mapState(useRetailersStore, {
       retailers: 'list'
+    }),
+    ...mapState(useCategoriesStore, {
+      categories: 'mainList'
     }),
     cRetailers () {
       if (this.retailers.length > 0) {
@@ -113,16 +64,29 @@ export default {
       } else {
         return this.emptyRetailers
       }
+    },
+    cCategories () {
+      if (this.categories.length > 0) {
+        return this.categories
+      } else {
+        return this.emptyCategories
+      }
     }
   },
   created() {
     if(!this.retailers.length) {
       this.getRetailers()
     }
+    if(!this.categories.length) {
+      this.getCategories()
+    }
   },
   methods: {
     ...mapActions(useRetailersStore, {
       getRetailers: 'getList'
+    }),
+    ...mapActions(useCategoriesStore, {
+      getCategories: 'getList'
     }),
     handleRetailerClick(retailer: any) {
       console.log('retailer: %o', retailer)
