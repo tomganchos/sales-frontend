@@ -48,12 +48,32 @@ export default {
     &__table {
       flex-grow: 1;
     }
+
+    .grid-container__table {
+
+      :deep( .p-dataview) {
+        margin-bottom: 60px;
+      }
+
+      :deep(.p-dataview-header) {
+        height: 72px;
+        padding: 8px 16px;
+        display: flex;
+        align-items: center;
+      }
+      :deep(.p-dataview-content) {
+        min-height: calc(1000px - 72px);
+      }
+    }
   }
 }
 
 @media screen and (min-width: 800px) {
   .products-view h2 {
     font-size: 20px;
+  }
+  :deep(.p-dataview) {
+    margin-bottom: 60px;
   }
 }
 

@@ -12,15 +12,15 @@ export default {
 
     dairy_section: 'Piimatoodete lett',
     milk_butter_and_eggs: 'Piim, või ja munad',
-    cheese: 'Juustud',
+    cheeses: 'Juustud',
     kefir_sour_cream_cottage_cheese: 'Kefiir, hapukoor, kodujuust',
     yogurts_and_desserts: 'Jogurtid ja magustoidud',
     dairy_for_kids: 'Lastele mõeldud piimatooted',
 
     bakery_section: 'Pagariäri',
     bread: 'Leib',
-    pastries: 'Saiakesed',
-    bread_rings: 'Leivapulgad',
+    baking: 'Saiakesed',
+    bread_rolls: 'Leivapulgad',
 
     water_and_drinks: 'Vesi ja joogid',
     water: 'Vesi',

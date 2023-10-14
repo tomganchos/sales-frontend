@@ -12,15 +12,15 @@ export default {
 
     dairy_section: 'Молочный прилавок',
     milk_butter_and_eggs: 'Молоко, масло и яйца',
-    cheese: 'Сыры',
+    cheeses: 'Сыры',
     kefir_sour_cream_cottage_cheese: 'Кефир, сметана, творог',
     yogurts_and_desserts: 'Йогурты и десерты',
     dairy_for_kids: 'Молочное для детей',
 
     bakery_section: 'Булочная',
     bread: 'Хлеб',
-    pastries: 'Выпечка',
-    bread_rings: 'Хлебцы',
+    baking: 'Выпечка',
+    bread_rolls: 'Хлебцы',
 
     water_and_drinks: 'Вода и напитки',
     water: 'Вода',

@@ -110,6 +110,24 @@ body {
   color: #22C55E;
 }
 
+.p-button.p-highlight {
+  background:#22C55E !important;
+  border-color:#22C55E !important;
+}
+
+.p-button.p-highlight:hover, .p-button.p-highlight:focus {
+  background:#16a34a !important;
+  border-color:#16a34a !important;
+}
+.p-button.p-highlight:active {
+  background:#15803D !important;
+  border-color:#15803D !important;
+}
+
+.p-button:focus {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #22C55E, 0 1px 2px 0 black;
+}
+
 h2 {
   font-size: 16px;
 }
