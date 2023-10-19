@@ -1,5 +1,5 @@
 <template>
-  <DataView :value="products" :layout="layout">
+  <DataView :value="discounts" :layout="layout">
     <template #header>
       <div class="flex justify-content-end">
         <DataViewLayoutOptions v-model="layout" severity="success" />
@@ -102,6 +102,32 @@
           </div>
         </div>
       </div>
+      <div class="col-12 product" v-for="discount in discounts" :key="discount.id">
+        <img :src="discount.product.image" alt="discount.product.name_ee" />
+        <div class="info">
+          <div class="name">{{ discount.product.name_ee }}</div>
+          <div class="translate">{{ discount.product.name_ru }}</div>
+          <div class="retailer">
+            <img class="retailer-logo"
+                 :src="discount.retailer.logo"
+                 :alt="discount.retailer.name"
+                 :style="{ background: discount.retailer.color }"
+            />
+            <span class="retailer-name">{{ discount.retailer.name }}</span>
+            <span class="retailer-condition">{{ discount.condition }}</span>
+          </div>
+          <div class="date">
+            kuni {{ discount.date_end }}
+          </div>
+        </div>
+        <div class="price">
+          <div class="discount">{{ discount.discount_percentage }}%</div>
+          <div class="cost">
+            <span class="new">{{ discount.price_with_sale }}€</span>
+            <span class="old">{{ discount.price_without_sale }}€</span>
+          </div>
+        </div>
+      </div>
     </template>
 
     <template #grid>
@@ -181,6 +207,9 @@
 import DataView from 'primevue/dataview'
 import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions'
 import Skeleton from 'primevue/skeleton'
+import {useProductsStore} from "@/stores/products";
+import {mapState} from "pinia";
+import {useDiscountsStore} from "@/stores/discounts";
 
 export default {
   name: "DataTable",
@@ -192,26 +221,100 @@ export default {
 
   data () {
     return {
-      layout: 'grid',
-      products: [
-        {
-          id: '1000',
-          code: 'f230fh0g3',
-          name: 'Bamboo Watch',
-          description: 'Product Description',
-          image: 'bamboo-watch.jpg',
-          price: 65,
-          category: 'Accessories',
-          quantity: 24,
-          inventoryStatus: 'INSTOCK',
-          rating: 5
-        }
-      ]
+      layout: 'list',
+      // products: [
+      //   {
+      //     id: '1000',
+      //     code: 'f230fh0g3',
+      //     name: 'Bamboo Watch',
+      //     description: 'Product Description',
+      //     image: 'bamboo-watch.jpg',
+      //     price: 65,
+      //     category: 'Accessories',
+      //     quantity: 24,
+      //     inventoryStatus: 'INSTOCK',
+      //     rating: 5
+      //   }
+      // ]
     }
   },
+  computed: {
+    ...mapState(useDiscountsStore, {
+      discounts: 'list'
+    })
+  }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.product {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+
+  img {
+    width: 120px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: var(--border-radius) !important;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 2px 6px rgba(0, 0, 0, 0.12) !important;
+  }
+
+  .info {
+    flex-grow: 1;
+
+    .name {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .translate {
+      font-size: 14px;
+    }
+
+    .retailer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      &-logo {
+        height: 24px;
+        width: 24px;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+
+    .discount {
+      background: #f5f462;
+      font-size: 20px;
+      font-weight: 700;
+      padding: 4px 24px 4px 8px;
+      margin-right: -16px;
+      border-radius: 8px 0 0 8px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 2px 6px rgba(0, 0, 0, 0.12) !important;
+    }
+    .cost {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .new {
+        font-weight: 700;
+        font-size: 24px;
+      }
+      .old {
+        color: #777;
+        text-decoration: line-through;
+      }
+    }
+  }
+}
 
 </style>

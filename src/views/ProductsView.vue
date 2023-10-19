@@ -13,6 +13,8 @@
 <script>
 import ProductsMenu from '@/views/Products/ProductsMenu.vue'
 import DataTable from '@/views/Products/DataTable.vue'
+import {mapActions} from "pinia";
+import {useDiscountsStore} from "@/stores/discounts";
 
 export default {
   name: "ProductsView",
@@ -25,6 +27,12 @@ export default {
   created() {
     console.log('ProductsView created')
     console.log('this.$route', this.$route.query)
+    this.getDiscounts()
+  },
+  methods: {
+    ...mapActions(useDiscountsStore, {
+      getDiscounts: 'getList'
+    })
   }
 }
 </script>
