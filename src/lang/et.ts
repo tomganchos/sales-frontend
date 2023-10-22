@@ -82,5 +82,9 @@ export default {
     for_cats: 'Kassidele',
     for_dogs: 'Koertele'
 
+  },
+
+  products: {
+    until: 'Kuni'
   }
 }

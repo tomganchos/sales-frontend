@@ -81,5 +81,10 @@ export default {
     pets_section: 'Для животных',
     for_cats: 'Для кошек',
     for_dogs: 'Для собак'
+  },
+
+  products: {
+    until: 'До',
+    only_app: 'с приложением'
   }
 }

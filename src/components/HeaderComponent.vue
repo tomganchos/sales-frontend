@@ -59,10 +59,10 @@ export default {
     return {
       locale: this.$i18n.locale,
       languages: [
-        { name: 'Eesti', value: 'ee' },
+        { name: 'Eesti', value: 'et' },
         { name: 'Русский', value: 'ru' }
       ],
-      selectedLanguage: { name: 'Eesti', value: 'ee' }
+      selectedLanguage: { name: 'Eesti', value: 'et' }
     }
   },
   mounted() {
