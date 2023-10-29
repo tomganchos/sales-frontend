@@ -6,4 +6,7 @@ export default class DiscountsApi {
     console.log('PARAMS: %o', params)
     return Axios.get(`${api}/discounts`)
   }
+  getDiscount(id: string) {
+    return Axios.get(`${api}/discounts/${id}`)
+  }
 }

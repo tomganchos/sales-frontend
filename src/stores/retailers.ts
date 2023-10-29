@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import RetailersApi from '@/api/retailers.ts'
-import type { Retailer } from '@/helpers/interfaces/Retailer.ts'
+import RetailersApi from '@/api/retailers'
+import type { Retailer } from '@/helpers/interfaces/Retailer'
 
 type RetailersStore = {
   list: Retailer[],

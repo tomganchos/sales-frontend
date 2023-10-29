@@ -51,7 +51,7 @@ export default {
 
   data () {
     return {
-      layout: 'list',
+      layout: 'grid',
       emptyDiscounts: [{}, {}, {}]
     }
   },

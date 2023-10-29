@@ -79,6 +79,8 @@ export default {
 @media screen and (min-width: 800px) {
   .products-view h2 {
     font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 16px;
   }
   :deep(.p-dataview) {
     margin-bottom: 60px;

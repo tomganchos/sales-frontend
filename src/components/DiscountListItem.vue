@@ -2,8 +2,8 @@
   <div class="product-list" v-if="discount.id">
     <img
         :src="discount.product.image"
+        :alt="discount.product.name_ee"
         class="image"
-        alt="discount.product.name_ee"
         @click="handleProductClick(discount)"
     />
     <div class="info">
@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="price">
-      <div class="discount">{{ discount.discount_percentage }}%</div>
+      <div class="discount">-{{ discount.discount_percentage }}%</div>
       <div class="cost">
         <span class="new">{{ discount.price_with_sale }}€</span>
         <span class="old">{{ discount.price_without_sale }}€</span>

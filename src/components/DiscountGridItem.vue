@@ -1,11 +1,11 @@
 <template>
   <div class="product-grid" v-if="discount.id">
     <div class="card">
-      <div class="discount">{{ discount.discount_percentage }}%</div>
+      <div class="discount">-{{ discount.discount_percentage }}%</div>
       <img
           :src="discount.product.image"
+          :alt="discount.product.name_ee"
           class="image"
-          alt="discount.product.name_ee"
           @click="handleProductClick(discount)"
       />
       <div class="cost">
