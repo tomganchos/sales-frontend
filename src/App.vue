@@ -22,10 +22,6 @@ export default {
     RouterView
   },
 
-  created () {
-    this.getCategories()
-    this.getRetailers()
-  },
   mounted () {
     console.log('process.env: %o', import.meta.env)
   },

@@ -2,14 +2,17 @@ import { defineStore } from 'pinia'
 import DiscountsApi from '@/api/discounts'
 import type { Discount } from '@/helpers/interfaces/Discount'
 
+type DiscountParams = {
+  offset: number,
+  category: null|string, // category
+  retailer: null|string // retailer
+  location: null|string // location
+}
+
 type DiscountsStore = {
   list: Discount[],
   currentDiscount: Discount|null,
-  params: {
-    offset: number,
-    c: null|string,
-    r: null|string,
-  },
+  params: DiscountParams,
   loading: boolean
 }
 const discountsApi = new DiscountsApi()
@@ -20,17 +23,15 @@ export const useDiscountsStore = defineStore('discounts', {
     currentDiscount: null,
     params: {
       offset: 0,
-      c: null,
-      r: null,
+      category: null,
+      retailer: null,
+      location: null,
     },
     loading: false,
   }),
   actions: {
     async getList() {
-      const { data } = await discountsApi.getDiscounts(this.params)
-      console.log('list: %o', data)
-      const logo = '/images/retailers/maxima.png'
-      console.log('import.meta.env.VITE_API_URL: %o', `${import.meta.env.VITE_API_URL}${logo}`)
+      const { data } = await discountsApi.getDiscounts(this.params) as { data: Discount[] }
       this.list = data.map((item: Discount) => {
         return {
           ...item,
@@ -40,12 +41,10 @@ export const useDiscountsStore = defineStore('discounts', {
           }
         }
       })
-      console.log('list: %o', this.list)
     },
 
     async getDiscount(id: string) {
-      const { data } = await discountsApi.getDiscount(id)
-      console.log('discount: %o', data)
+      const { data } = await discountsApi.getDiscount(id) as { data: Discount }
       this.currentDiscount = {
         ...data,
         retailer: {
@@ -53,6 +52,11 @@ export const useDiscountsStore = defineStore('discounts', {
           logo: (import.meta.env.VITE_API_URL) ? `${import.meta.env.VITE_API_URL}${data.retailer.logo}` : data.retailer.logo,
         }
       }
+    },
+
+    setParams(params: DiscountParams) {
+      console.log('PARAMS: %o', params)
+      Object.assign(this.params, params)
     }
   }
 })
