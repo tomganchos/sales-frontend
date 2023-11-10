@@ -2,6 +2,21 @@ export default {
   retailers: {
     title: 'Allahinnatud kauplused'
   },
+  products: {
+    until: 'Kuni',
+    only_app: 'rakendusega',
+    header_for_null: 'Allahindlused kauplustes',
+    header_for_one_1: 'Allahindlused',
+    header_for_one_2: ' kauplustes',
+    header_for_many_1: 'Allahindlused',
+    header_for_many_2: 'и',
+    header_for_many_3: 'kauplustes'
+  },
+
+  header: {
+    search: 'Otsing..'
+  },
+
   categories: {
     title: 'Allahindlused kategooriate kaupa',
     all: 'Kõik kategooriad',
@@ -61,8 +76,8 @@ export default {
     dumplings_and_vareniki: 'Pelmeenid ja varenikud',
     vegetables_and_berries: 'Köögiviljad ja marjad',
     desserts: 'Magustoidud',
-    'semi-finished_products': 'Pooltooted',
-    fish_and_seafood: 'Kala ja mereannid',
+    'semi_finished_products': 'Pooltooted',
+    fish_and_seafood_freezing: 'Kala ja mereannid',
     ice_and_something_else: 'Jää ja mõned muud asjad',
 
     groceries: 'Toidupood',
@@ -75,16 +90,12 @@ export default {
 
     for_children: 'Lastekaupade',
     nutrition: 'Toit',
-    water_and_drinks: 'Vesi ja joogid',
+    water_and_drinks_for_children: 'Vesi ja joogid lastele',
     hygiene_and_care: 'Hügieen ja hooldus',
 
     pets_section: 'Loomade jaoks',
     for_cats: 'Kassidele',
     for_dogs: 'Koertele'
 
-  },
-
-  products: {
-    until: 'Kuni'
   }
 }

@@ -1,17 +1,18 @@
 <template>
   <header>
-    <div class="logo">
+    <div class="logo" @click="routeToHome">
       <img src="@/assets/logo.png" alt="Logo" />
     </div>
-    <h1 class="name">
+    <h1 class="name" @click="routeToHome">
       <strong>Hind</strong>
       <span>ikutsikas</span>
     </h1>
     <span class="p-input-icon-left search">
       <i class="pi pi-search" />
-      <InputText size="small" placeholder="Поиск.." severity="success" />
+      <InputText size="small" :placeholder="$t('header.search')" severity="success" />
     </span>
     <PButton
+        style="display: none;"
         class="location"
         label="Tallinn"
         size="small"
@@ -39,13 +40,36 @@
         size="small"
         icon="pi pi-bars"
         outlined
+        @click="hiddenMenu = !hiddenMenu"
     />
+    <Sidebar v-model:visible="hiddenMenu" position="right">
+      <template #closeicon="{ closeCallback }">
+        <PButton type="button" @click="closeCallback" icon="pi pi-times" rounded outlined class="h-2rem w-2rem"></PButton>
+      </template>
+
+      <Dropdown
+          v-model="selectedLanguage"
+          :options="languages"
+          optionLabel="name"
+          placeholder="Select a City"
+          class="languages-hidden"
+          @change="selectLanguage"
+      >
+        <template #value="slotProps">
+          <div class="suggestion">
+            <span class="pi pi-globe"></span>
+            {{ slotProps.value.name }}
+          </div>
+        </template>
+      </Dropdown>
+    </Sidebar>
   </header>
 </template>
 
 <script>
 import InputText from 'primevue/inputtext'
 import Dropdown from 'primevue/dropdown'
+import Sidebar from 'primevue/sidebar'
 import { default as PButton }  from 'primevue/button'
 
 export default {
@@ -53,7 +77,8 @@ export default {
   components: {
     InputText,
     Dropdown,
-    PButton
+    PButton,
+    Sidebar,
   },
   data() {
     return {
@@ -62,7 +87,8 @@ export default {
         { name: 'Eesti', value: 'et' },
         { name: 'Русский', value: 'ru' }
       ],
-      selectedLanguage: { name: 'Eesti', value: 'et' }
+      selectedLanguage: { name: 'Eesti', value: 'et' },
+      hiddenMenu: false
     }
   },
   mounted() {
@@ -71,6 +97,9 @@ export default {
   methods: {
     selectLanguage(value) {
       this.$i18n.locale = value.value.value
+    },
+    routeToHome() {
+      this.$router.push({ name: 'home' })
     }
   }
 }
@@ -85,7 +114,7 @@ header {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 24px;
+  padding: 8px;
   background-color: #fff;
   border-radius: 0 0 16px 16px;
   box-shadow: 0 0 16px 8px #f0f0f1;
@@ -100,6 +129,7 @@ header {
     background-color: #22C55E;
     color: #ffffff;
     border-radius: 50%;
+    cursor: pointer;
 
     img {
       width: 100%
@@ -108,6 +138,7 @@ header {
   h1.name {
     font-weight: normal;
     display: none;
+    cursor: pointer;
   }
   .search {
     margin-left: auto;
@@ -119,11 +150,16 @@ header {
       flex-grow: 1;
     }
   }
+
+  .menu {
+    min-width: 48px;
+  }
 }
 
 .location {
   display: none;
 }
+
 
 .languages {
   height: 42px;
@@ -150,8 +186,15 @@ header {
       margin-right: 8px;
     }
   }
+
+  &-hidden {
+    display: flex;
+  }
 }
 @media screen and (min-width: 800px) {
+  header {
+    padding: 8px 24px;
+  }
   header h1.name {
     display: flex;
   }

@@ -2,6 +2,22 @@ export default {
   retailers: {
     title: 'Магазины со скидками'
   },
+
+  products: {
+    until: 'До',
+    only_app: 'с приложением',
+    header_for_null: 'Скидки в магазинах',
+    header_for_one_1: 'Скидки в магазине',
+    header_for_one_2: '',
+    header_for_many_1: 'Скидки в магазинах',
+    header_for_many_2: 'и',
+    header_for_many_3: ''
+  },
+
+  header: {
+    search: 'Поиск..'
+  },
+
   categories: {
     title: 'Скидки по категориям',
     all: 'Все категории',
@@ -61,9 +77,9 @@ export default {
     dumplings_and_vareniki: 'Пельмени и вареники',
     vegetables_and_berries: 'Овощи и ягоды',
     desserts: 'Десерты',
-    'semi-finished_products': 'Полуфабрикаты',
-    fish_and_seafood: 'Рыба и морепродукты',
-    ice_and_something_else: 'Лёд и ещё что-то',
+    'semi_finished_products': 'Полуфабрикаты',
+    fish_and_seafood_freezing: 'Рыба и морепродукты',
+    'ice_and_something_else': 'Лёд и ещё что-то',
 
     groceries: 'Бакалея',
     pasta_cereals_and_flour: 'Макароны, крупы и мука',
@@ -75,16 +91,11 @@ export default {
 
     for_children: 'Для детей',
     nutrition: 'Питание',
-    water_and_drinks: 'Вода и напитки',
+    water_and_drinks_for_children: 'Вода и напитки для детей',
     hygiene_and_care: 'Гигиена и уход',
 
-    pets_section: 'Для животных',
+    'pets_section': 'Для животных',
     for_cats: 'Для кошек',
     for_dogs: 'Для собак'
-  },
-
-  products: {
-    until: 'До',
-    only_app: 'с приложением'
   }
 }
