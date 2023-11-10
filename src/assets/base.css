@@ -128,6 +128,22 @@ body {
   box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #22C55E, 0 1px 2px 0 black;
 }
 
+.p-button.p-button-outlined {
+  background-color: transparent;
+  color: #22C55E;
+  border: 1px solid;
+}
+.p-button.p-button-outlined:enabled:hover {
+  background: rgba(34, 197, 94, 0.04);
+  color: #22C55E;
+  border: 1px solid;
+}
+.p-button.p-button-outlined:enabled:active {
+  background: rgba(34, 197, 94, 0.16);
+  color: #22C55E;
+  border: 1px solid;
+}
+
 h2 {
   font-size: 16px;
 }

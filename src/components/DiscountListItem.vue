@@ -19,7 +19,9 @@
              :style="{ background: discount.retailer.color }"
         />
         <span class="retailer-name">{{ discount.retailer.name }}</span>
-        <span class="retailer-condition">{{ discount.condition }}</span>
+        <span class="retailer-condition">
+            <span v-if="discount.condition" class="pi pi-info-circle condition"/>
+          </span>
       </div>
       <div class="date">
         {{ getDate(discount.date_end) }}
@@ -79,18 +81,18 @@ export default {
 <style lang="scss" scoped>
 .product-list {
   display: flex;
-  gap: 16px;
-  padding: 16px;
+  gap: 8px;
+  padding: 8px;
   width: 100%;
 
   img {
     width: 120px;
-    min-width: 120px;
+    min-width: 60px;
     height: 100px;
-    min-height: 100px;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03), 0 0 2px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.12);
+    min-height: 50px;
+    object-fit: contain;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03), 0 0 1px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
 
     &.image {
       cursor: pointer;
@@ -101,32 +103,37 @@ export default {
     flex-grow: 1;
 
     .name {
-      font-size: 18px;
+      font-size: 14px;
       font-weight: 600;
       cursor: pointer;
     }
 
     .translate {
-      font-size: 14px;
+      font-size: 10px;
     }
 
     .retailer {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      margin-top: 8px;
 
       &-logo {
-        height: 24px;
-        min-height: 24px;
-        width: 24px;
-        min-width: 24px;
+        height: 16px;
+        min-height: 16px;
+        width: 16px;
+        min-width: 16px;
         object-fit: contain;
+      }
+
+      &-name {
+        font-size: 12px;
       }
     }
 
     .date {
       color: #aaa;
-      font-size: 14px;
+      font-size: 10px;
     }
   }
 
@@ -135,30 +142,35 @@ export default {
     flex-direction: column;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 8px;
+    gap: 6px;
 
     .discount {
       background: #f5f462;
-      font-size: 20px;
+      font-size: 14px;
       font-weight: 700;
-      padding: 4px 24px 4px 8px;
-      margin-right: -16px;
-      border-radius: 8px 0 0 8px;
+      padding: 2px 12px 2px 4px;
+      margin-right: -8px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03), 0 0 2px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+      border-radius: 4px 0 0 4px;
     }
     .cost {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
 
       .new {
         font-weight: 700;
-        font-size: 24px;
+        font-size: 18px;
       }
       .old {
+        font-size: 12px;
         color: #aaa;
         text-decoration: line-through;
       }
+    }
+
+    .condition {
+      cursor: pointer;
     }
   }
 
@@ -192,6 +204,72 @@ export default {
     &-cost {
       height: 32px !important;
       width: 92px !important;
+    }
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .product-list {
+    gap: 16px;
+    padding: 16px;
+    width: 100%;
+
+    img {
+      width: 120px;
+      min-width: 120px;
+      height: 100px;
+      min-height: 100px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03), 0 0 2px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.12);
+      border-radius: 8px;
+    }
+
+    .info {
+      .name {
+        font-size: 18px;
+      }
+      .translate {
+        font-size: 14px;
+      }
+      .retailer {
+        gap: 8px;
+
+        &-logo {
+          height: 24px;
+          min-height: 24px;
+          width: 24px;
+          min-width: 24px;
+        }
+
+        &-name {
+          font-size: 16px;
+        }
+      }
+
+      .date {
+        font-size: 14px;
+      }
+    }
+
+    .price {
+      gap: 8px;
+
+      .discount {
+        font-size: 20px;
+        padding: 4px 24px 4px 8px;
+        margin-right: -16px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03), 0 0 2px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+        border-radius: 8px 0 0 8px;
+      }
+      .cost {
+        gap: 8px;
+
+        .new {
+          font-size: 24px;
+        }
+        .old {
+          font-size: 16px;
+        }
+      }
     }
   }
 }

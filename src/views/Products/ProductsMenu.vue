@@ -4,7 +4,7 @@
 
 <script>
 import { default as PMenu } from 'primevue/menu'
-import { mapState } from 'pinia'
+import {mapActions, mapState} from 'pinia'
 import { useCategoriesStore } from '@/stores/categories'
 
 export default {
@@ -79,21 +79,6 @@ export default {
             }
           })
         }
-        // console.log('c: %o', c)
-        // if (c) {
-        //   c.items = this.categories.filter(item => item.parent_id === parseInt(this.selectedCategory)).map(item => {
-        //     return {
-        //       label: this.$t(`categories.${item.name}`),
-        //       id: item.id,
-        //       style: 'margin-left: 16px;',
-        //       command: () => {
-        //         console.log('category: %o', item)
-        //         this.selectedCategory = item.id
-        //         console.log('selectedCategory', this.selectedCategory)
-        //       }
-        //     }
-        //   })
-        // }
       } else {
         array[0].items = []
       }
@@ -101,14 +86,22 @@ export default {
       return array
     }
   },
-  mounted() {
-    console.log('MOUTED')
+  async mounted() {
+    console.log('this.categories: %o', this.categories.length)
+    if (this.categories.length === 0) {
+      await this.getCategories()
+    }
     if (this.$route.query.c) {
       this.selectedCategory = this.$route.query.c
     } else {
       this.selectedCategory = null
     }
     console.log('this.selectedCategory: %o', this.selectedCategory)
+  },
+  methods: {
+    ...mapActions(useCategoriesStore, {
+      getCategories: 'getList'
+    })
   }
 }
 </script>
@@ -119,5 +112,16 @@ export default {
 }
 .grid-container__menu {
   min-width: 200px;
+}
+.p-menu ul {
+  padding: 0;
+}
+
+li {
+  padding: 0;
+  line-height: 1.4 !important;
+}
+li span {
+  line-height: 1.3 !important;
 }
 </style>
