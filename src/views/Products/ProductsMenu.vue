@@ -6,6 +6,7 @@
 import { default as PMenu } from 'primevue/menu'
 import {mapActions, mapState} from 'pinia'
 import { useCategoriesStore } from '@/stores/categories'
+import {useDiscountsStore} from "@/stores/discounts";
 
 export default {
   name: "ProductsMenu",
@@ -30,6 +31,7 @@ export default {
           id: null,
           command: () => {
             this.selectedCategory = null
+            this.selectCategory({id: null})
           }
         }
       ]
@@ -38,9 +40,7 @@ export default {
           label: this.$t(`categories.${category.name}`),
           id: category.id,
           command: () => {
-            console.log('category: %o', category)
-            this.selectedCategory = category.id
-            console.log('selectedCategory', this.selectedCategory)
+            this.selectCategory(category)
           }
         })
       })
@@ -57,9 +57,7 @@ export default {
               id: item.id,
               style: 'margin-left: 16px;',
               command: () => {
-                console.log('category: %o', item)
-                this.selectedCategory = item.id
-                console.log('selectedCategory', this.selectedCategory)
+                this.selectCategory(item)
               }
             }
           })
@@ -72,9 +70,7 @@ export default {
               id: item.id,
               style: 'margin-left: 16px;',
               command: () => {
-                console.log('category: %o', item)
-                this.selectedCategory = item.id
-                console.log('selectedCategory', this.selectedCategory)
+                this.selectCategory(item)
               }
             }
           })
@@ -87,7 +83,6 @@ export default {
     }
   },
   async mounted() {
-    console.log('this.categories: %o', this.categories.length)
     if (this.categories.length === 0) {
       await this.getCategories()
     }
@@ -96,12 +91,24 @@ export default {
     } else {
       this.selectedCategory = null
     }
-    console.log('this.selectedCategory: %o', this.selectedCategory)
   },
   methods: {
     ...mapActions(useCategoriesStore, {
       getCategories: 'getList'
-    })
+    }),
+    ...mapActions(useDiscountsStore, {
+      setParams: 'setParams',
+      getDiscounts: 'getList'
+    }),
+    selectCategory(category) {
+      console.log('category: %o', category)
+      this.selectedCategory = category.id
+      console.log('selectedCategory', this.selectedCategory)
+      this.setParams({
+        category: category.id ? String(category.id) : null
+      })
+      this.getDiscounts()
+    },
   }
 }
 </script>

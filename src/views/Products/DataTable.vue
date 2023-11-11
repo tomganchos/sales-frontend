@@ -10,9 +10,7 @@
             outlined
             @click="hiddenMenu = !hiddenMenu"
         />
-        <div class="filters">
-          Filters
-        </div>
+        <div class="filters"/>
 
         <Sidebar v-model:visible="hiddenMenu" class="sidebar">
           <template #closeicon="{ closeCallback }">
@@ -46,8 +44,16 @@
       />
     </template>
 
+    <template #empty>
+      <div class="empty">Скидок нет :(</div>
+    </template>
+
     <template #footer>
-      <Paginator :rows="16" :totalRecords="95"></Paginator>
+      <Paginator
+          :rows="16"
+          :totalRecords="discountCount"
+          @update:first="updatePage"
+      />
     </template>
   </DataView>
 </template>
@@ -59,7 +65,7 @@ import Paginator from 'primevue/paginator'
 import Sidebar from 'primevue/sidebar'
 import { default as PButton }  from 'primevue/button'
 
-import { mapState } from 'pinia'
+import { mapActions, mapState } from 'pinia'
 import { useDiscountsStore } from '@/stores/discounts'
 
 import { DateTime } from 'luxon'
@@ -90,18 +96,24 @@ export default {
   },
   computed: {
     ...mapState(useDiscountsStore, {
-      discounts: 'list'
+      discounts: 'list',
+      discountLoading: 'loading',
+      discountCount: 'count'
     }),
     cDiscounts () {
-      if (this.discounts.length > 0) {
-        return this.discounts
-      } else {
+      if (this.discountLoading) {
         return this.emptyDiscounts
+      } else {
+        return this.discounts
       }
     }
   },
 
   methods: {
+    ...mapActions(useDiscountsStore, {
+      setParams: 'setParams',
+      getDiscounts: 'getList'
+    }),
     handleProductClick(product) {
       this.$router.push('/products/' + product.id)
     },
@@ -109,6 +121,12 @@ export default {
       const d = new Date(date)
       return this.$t(`products.until`) + ' ' +
           DateTime.fromJSDate(d).setLocale(this.$i18n.locale).toFormat('dd MMM')
+    },
+    updatePage(pageNumber) {
+      this.setParams({
+        offset: pageNumber ? String(pageNumber) : null
+      })
+      this.getDiscounts()
     }
   }
 }
@@ -130,6 +148,24 @@ export default {
 }
 button.menu-button {
   background: white !important;
+}
+.empty {
+  padding: 16px;
+  font-weight: 700;
+}
+.p-paginator-page.p-highlight {
+  background: rgba(34, 197, 94, 0.04) !important;
+  border-color: rgba(34, 197, 94, 0.16) !important;
+  color: #22C55E !important;
+}
+button.p-paginator-element {
+  &:focus {
+    box-shadow: 0 0 0 0.2rem #22C55E;
+  }
+
+  svg {
+    border: none !important;
+  }
 }
 @media screen and (min-width: 800px) {
   button.menu-button {
