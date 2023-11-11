@@ -5,12 +5,10 @@ import {useDiscountsStore} from '@/stores/discounts'
 import { DateTime } from 'luxon'
 import Card from 'primevue/card'
 import Skeleton from 'primevue/skeleton'
-import DiscountListItem from "@/components/DiscountListItem.vue";
 
 export default defineComponent({
   name: "ProductView",
   components: {
-    DiscountListItem,
     Card,
     Skeleton
   },
@@ -34,13 +32,16 @@ export default defineComponent({
       return this.$t(`products.until`) + ' ' +
           DateTime.fromJSDate(d).setLocale(this.$i18n.locale).toFormat('dd MMM')
     },
+    handleBack() {
+      this.$router.push({ name: 'products' })
+    }
   }
 })
 </script>
 
 <template>
   <main class="product-view">
-    <div class="back-button">&#60; Вернуться назад</div>
+    <div class="back-button" @click="handleBack">&#60; Вернуться назад</div>
     <Card>
       <template #content>
         <img
@@ -107,6 +108,7 @@ export default defineComponent({
     padding: 16px 0;
     font-size: 16px;
     font-weight: 500;
+    cursor: pointer;
   }
 
   :deep(.p-card) {

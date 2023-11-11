@@ -23,7 +23,6 @@
                :src="discount.retailer.logo"
                :alt="discount.retailer.name"
                :style="{ background: discount.retailer.color }"
-               @load="test"
           />
           <span class="retailer-name">{{ discount.retailer.name }}</span>
           <span class="retailer-condition">
@@ -72,9 +71,6 @@ export default {
     },
     handleProductClick(product) {
       this.$emit('handleProductClick', product)
-    },
-    test(value) {
-      console.log('test: %o', value)
     }
   }
 }

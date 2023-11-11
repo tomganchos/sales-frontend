@@ -159,6 +159,9 @@ button.menu-button {
   color: #22C55E !important;
 }
 button.p-paginator-element {
+  min-width: 32px !important;
+  height: 32px !important;
+
   &:focus {
     box-shadow: 0 0 0 0.2rem #22C55E;
   }
@@ -173,6 +176,10 @@ button.p-paginator-element {
   }
   .filters {
     display: flex;
+  }
+  button.p-paginator-element {
+    min-width: 48px !important;
+    height: 48px !important;
   }
 }
 </style>

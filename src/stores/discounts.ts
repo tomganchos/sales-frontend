@@ -3,15 +3,17 @@ import DiscountsApi from '@/api/discounts'
 import type { Discount } from '@/helpers/interfaces/Discount'
 
 type DiscountParams = {
-  offset: number,
-  category: null|string, // category
-  retailer: null|string // retailer
-  location: null|string // location
+  offset: number
+  category?: null|string
+  retailer?: null|string
+  location?: null|string
+  term?: null|string
 }
 
 type DiscountsStore = {
   list: Discount[],
   currentDiscount: Discount|null,
+  count: number,
   params: DiscountParams,
   loading: boolean
 }
@@ -21,18 +23,21 @@ export const useDiscountsStore = defineStore('discounts', {
   state: () : DiscountsStore => ({
     list: [],
     currentDiscount: null,
+    count: 0,
     params: {
       offset: 0,
       category: null,
       retailer: null,
       location: null,
+      term: null
     },
     loading: false,
   }),
   actions: {
     async getList() {
-      const { data } = await discountsApi.getDiscounts(this.params) as { data: Discount[] }
-      this.list = data.map((item: Discount) => {
+      this.loading = true
+      const { data } = await discountsApi.getDiscounts(this.params) as { data: { list: Discount[], count: number }}
+      this.list = data.list.map((item: Discount) => {
         return {
           ...item,
           retailer: {
@@ -41,9 +46,12 @@ export const useDiscountsStore = defineStore('discounts', {
           }
         }
       })
+      this.count = data.count
+      this.loading = false
     },
 
     async getDiscount(id: string) {
+      this.loading = true
       const { data } = await discountsApi.getDiscount(id) as { data: Discount }
       this.currentDiscount = {
         ...data,
@@ -52,10 +60,10 @@ export const useDiscountsStore = defineStore('discounts', {
           logo: (import.meta.env.VITE_API_URL) ? `${import.meta.env.VITE_API_URL}${data.retailer.logo}` : data.retailer.logo,
         }
       }
+      this.loading = false
     },
 
     setParams(params: DiscountParams) {
-      console.log('PARAMS: %o', params)
       Object.assign(this.params, params)
     }
   }

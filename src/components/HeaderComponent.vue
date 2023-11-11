@@ -9,7 +9,12 @@
     </h1>
     <span class="p-input-icon-left search">
       <i class="pi pi-search" />
-      <InputText size="small" :placeholder="$t('header.search')" severity="success" />
+      <InputText
+          size="small"
+          :placeholder="$t('header.search')"
+          severity="success"
+          @keydown.enter="handleSearch($event.target.value)"
+      />
     </span>
     <PButton
         style="display: none;"
@@ -71,6 +76,8 @@ import InputText from 'primevue/inputtext'
 import Dropdown from 'primevue/dropdown'
 import Sidebar from 'primevue/sidebar'
 import { default as PButton }  from 'primevue/button'
+import { useDiscountsStore } from '@/stores/discounts'
+import { mapActions } from 'pinia'
 
 export default {
   name: 'HeaderComponent',
@@ -95,11 +102,21 @@ export default {
     this.selectedLanguage = this.languages.find(item => item.value === this.$i18n.locale)
   },
   methods: {
+    ...mapActions(useDiscountsStore, {
+      setParams: 'setParams',
+      getDiscounts: 'getList'
+    }),
     selectLanguage(value) {
       this.$i18n.locale = value.value.value
     },
     routeToHome() {
       this.$router.push({ name: 'home' })
+    },
+    handleSearch(value) {
+      this.setParams({
+        term: value ? value : null
+      })
+      this.getDiscounts()
     }
   }
 }

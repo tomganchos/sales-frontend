@@ -3,7 +3,6 @@ import Axios from 'axios'
 const api = import.meta.env.VITE_API_URL
 export default class DiscountsApi {
   getDiscounts(params: any) {
-    console.log('PARAMS: %o', params)
     // MOCK DATA
     // return new Promise((resolve) => {
     //   setTimeout(() => {
@@ -13,7 +12,9 @@ export default class DiscountsApi {
     //   }, 1000)
     // })
 
-    return Axios.get(`${api}/discounts`)
+    return Axios.get(`${api}/discounts`, {
+      params
+    })
   }
   getDiscount(id: string) {
     // MOCK DATA
