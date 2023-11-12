@@ -16,4 +16,7 @@ export default class RetailersApi {
 
     return Axios.get(`${api}/retailers`)
   }
+  getRetailersDiscountCounts() {
+    return Axios.get(`${api}/retailers/counts`)
+  }
 }

@@ -87,7 +87,7 @@ export default defineComponent({
       </template>
     </Card>
 
-    <div class="same-list">
+    <div class="same-list" style="display: none;">
       <h2
           style="margin-top: 20px; margin-bottom: 16px; font-size: 24px"
       >

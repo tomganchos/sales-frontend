@@ -27,7 +27,7 @@
          >
     <span class="description"
           v-if="description">
-      {{ item.discountCount }} скидок
+      {{ item.discountCount }} {{ $t('retailers.promotions') }}
     </span>
   </div>
 </template>

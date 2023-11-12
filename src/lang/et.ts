@@ -1,6 +1,7 @@
 export default {
   retailers: {
-    title: 'Allahinnatud kauplused'
+    title: 'Allahinnatud kauplused',
+    promotions: 'aktsiat'
   },
   products: {
     until: 'Kuni',

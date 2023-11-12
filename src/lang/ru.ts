@@ -1,6 +1,7 @@
 export default {
   retailers: {
-    title: 'Магазины со скидками'
+    title: 'Магазины со скидками',
+    promotions: 'акций'
   },
 
   products: {

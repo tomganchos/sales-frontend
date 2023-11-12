@@ -53,14 +53,27 @@ export default {
   },
   computed: {
     ...mapState(useRetailersStore, {
-      retailers: 'list'
+      retailers: 'list',
+      counts: 'counts'
     }),
     ...mapState(useCategoriesStore, {
       categories: 'mainList'
     }),
     cRetailers () {
       if (this.retailers.length > 0) {
-        return this.retailers
+        if (this.counts) {
+          return this.retailers.map((retailer: any) => {
+            const count = this.counts.find((item: any) => item.id_retailer === retailer.id)
+            if (count) {
+              retailer.discountCount = count.discountcount
+            } else {
+              retailer.discountCount = 0
+            }
+            return retailer
+          })
+        } else {
+          return this.retailers
+        }
       } else {
         return this.emptyRetailers
       }
@@ -80,10 +93,14 @@ export default {
     if(!this.categories.length) {
       this.getCategories()
     }
+    if (!this.counts.length) {
+      this.getCounts()
+    }
   },
   methods: {
     ...mapActions(useRetailersStore, {
-      getRetailers: 'getList'
+      getRetailers: 'getList',
+      getCounts: 'getCounts'
     }),
     ...mapActions(useCategoriesStore, {
       getCategories: 'getList'

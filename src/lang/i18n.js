@@ -3,7 +3,7 @@ import et from './et.ts'
 import ru from './ru.ts'
 
 const i18n = createI18n({
-    locale: 'ru',
+    locale: 'et',
     messages: {
       et,
       ru
