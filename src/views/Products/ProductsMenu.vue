@@ -2,14 +2,23 @@
   <PMenu class="grid-container__menu" :model="items" />
 </template>
 
-<script>
+<script lang="ts">
 import { default as PMenu } from 'primevue/menu'
-import {mapActions, mapState} from 'pinia'
+import { mapActions, mapState } from 'pinia'
 import { useCategoriesStore } from '@/stores/categories'
-import {useDiscountsStore} from "@/stores/discounts";
+import { useDiscountsStore } from '@/stores/discounts'
+import type { Category } from '@/helpers/interfaces/Category'
+
+interface MenuItem {
+  label: string
+  id: number | null
+  command?: () => void
+  items?: MenuItem[] // Теперь это использует интерфейс MenuItem вместо typeof array
+  style?: string
+}
 
 export default {
-  name: "ProductsMenu",
+  name: 'ProductsMenu',
 
   components: {
     PMenu
@@ -17,81 +26,81 @@ export default {
 
   data() {
     return {
-      selectedCategory: null
+      selectedCategory: null as number | null
     }
   },
+
   computed: {
     ...mapState(useCategoriesStore, {
       categories: 'list'
     }),
-    items () {
-      let array = [
+    items(): MenuItem[] {
+      let array: MenuItem[] = [
         {
           label: this.$t('categories.all'),
           id: null,
           command: () => {
-            this.selectedCategory = null
-            this.selectCategory({id: null})
+            this.selectCategory(null)
           }
         }
       ]
-      this.categories.filter(item => item.parent_id === null).forEach((category) => {
-        array.push({
-          label: this.$t(`categories.${category.name}`),
-          id: category.id,
-          command: () => {
-            this.selectCategory(category)
-          }
+      this.categories
+        .filter((item: Category) => item.parent_id === null)
+        .forEach((category: Category) => {
+          array.push({
+            label: this.$t(`categories.${category.name}`),
+            id: category.id,
+            command: () => {
+              this.selectCategory(category.id)
+            }
+          })
         })
-      })
-      array.forEach(item => delete item.items)
-      if (this.selectedCategory && this.categories.length > 0) {
-        let c = this.categories.find(item => item.id === parseInt(this.selectedCategory))
-        if (c.parent_id) {
-          const category = this.categories.find(item => item.id === parseInt(this.selectedCategory))
-          const subCategories = this.categories.filter(item => item.parent_id === category.parent_id)
-          let mainCategory = array.find(item => item.id === c.parent_id)
-          mainCategory.items = subCategories.map(item => {
-            return {
-              label: this.$t(`categories.${item.name}`),
-              id: item.id,
+
+      if (this.selectedCategory !== null && this.categories.length > 0) {
+        const c = this.categories.find((item: Category) => item.id === this.selectedCategory)
+        if (c && c.parent_id !== null) {
+          const subCategories = this.categories.filter(
+            (item: Category) => item.parent_id === c.parent_id
+          )
+          let mainCategory = array.find((item) => item.id === c.parent_id)
+          if (mainCategory) {
+            mainCategory.items = subCategories.map((subCategory: Category) => ({
+              label: this.$t(`categories.${subCategory.name}`),
+              id: subCategory.id,
               style: 'margin-left: 16px;',
               command: () => {
-                this.selectCategory(item)
+                this.selectCategory(subCategory.id)
               }
-            }
-          })
-        } else {
-          const category = array.find(item => item.id === parseInt(this.selectedCategory))
-          let subCategories = this.categories.filter(item => item.parent_id === category.id)
-          category.items = subCategories.map(item => {
-            return {
-              label: this.$t(`categories.${item.name}`),
-              id: item.id,
+            }))
+          }
+        } else if (c) {
+          const subCategories = this.categories.filter((item: Category) => item.parent_id === c.id)
+          let category = array.find((item) => item.id === c.id)
+          if (category) {
+            category.items = subCategories.map((subCategory: Category) => ({
+              label: this.$t(`categories.${subCategory.name}`),
+              id: subCategory.id,
               style: 'margin-left: 16px;',
               command: () => {
-                this.selectCategory(item)
+                this.selectCategory(subCategory.id)
               }
-            }
-          })
+            }))
+          }
         }
-      } else {
-        array[0].items = []
       }
 
       return array
     }
   },
+
   async mounted() {
     if (this.categories.length === 0) {
       await this.getCategories()
     }
-    if (this.$route.query.c) {
-      this.selectedCategory = this.$route.query.c
-    } else {
-      this.selectedCategory = null
-    }
+    const categoryId = this.$route.query.c
+    this.selectedCategory = typeof categoryId === 'string' ? parseInt(categoryId, 10) : null
   },
+
   methods: {
     ...mapActions(useCategoriesStore, {
       getCategories: 'getList'
@@ -100,21 +109,19 @@ export default {
       setParams: 'setParams',
       getDiscounts: 'getList'
     }),
-    selectCategory(category) {
-      console.log('category: %o', category)
-      this.selectedCategory = category.id
-      console.log('selectedCategory', this.selectedCategory)
+    selectCategory(categoryId: number | null) {
+      this.selectedCategory = categoryId
       this.setParams({
-        category: category.id ? String(category.id) : null
+        category: categoryId !== null ? String(categoryId) : null
       })
       this.getDiscounts()
-    },
+    }
   }
 }
 </script>
 
 <style>
-:deep( .submenu) {
+:deep(.submenu) {
   margin-left: 16px;
 }
 .grid-container__menu {

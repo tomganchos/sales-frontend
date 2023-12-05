@@ -4,31 +4,30 @@
       <h2>{{ header }}</h2>
       <div class="grid-container">
         <ProductsMenu class="grid-container__menu" />
-        <DataTable class="grid-container__table"  />
+        <DataTable class="grid-container__table" />
       </div>
     </div>
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import ProductsMenu from '@/views/Products/ProductsMenu.vue'
 import DataTable from '@/views/Products/DataTable.vue'
-import {mapActions, mapState} from "pinia";
-import {useDiscountsStore} from "@/stores/discounts";
-import {useRetailersStore} from "@/stores/retailers";
+import { mapActions, mapState } from 'pinia'
+import { useDiscountsStore } from '@/stores/discounts'
+import { useRetailersStore } from '@/stores/retailers'
+import { defineComponent } from 'vue'
 
-export default {
-  name: "ProductsView",
+export default defineComponent({
+  name: 'ProductsView',
 
   components: {
     ProductsMenu,
     DataTable
   },
 
-  data () {
-    return {
-
-    }
+  data() {
+    return {}
   },
 
   computed: {
@@ -38,14 +37,22 @@ export default {
     ...mapState(useDiscountsStore, {
       discountsParams: 'params'
     }),
-    header() {
-      if (this.discountsParams.retailer === null) return this.$t('products.header_for_null')
-      else {
-        const retailers = this.discountsParams.retailer.split(',')
+    header(): string {
+      if (this.discountsParams.retailer === null) {
+        return this.$t('products.header_for_null')
+      } else {
+        const retailers = this.discountsParams.retailer
+          ? this.discountsParams.retailer.split(',')
+          : []
         if (retailers.length === 1) {
           if (this.RetailersList.length === 0) return this.$t('products.header_for_null')
-          const retailer = this.RetailersList.find(r => String(r.id) === String(retailers[0]))
-          return `${this.$t('products.header_for_one_1')} ${retailer.name} ${this.$t('products.header_for_one_2')}`
+          const retailer = this.RetailersList.find((r) => String(r.id) === String(retailers[0]))
+          if (!retailer) {
+            return this.$t('products.header_for_null')
+          }
+          return `${this.$t('products.header_for_one_1')} ${retailer.name} ${this.$t(
+            'products.header_for_one_2'
+          )}`
         } else {
           return this.$t('products.header_for_null')
         }
@@ -56,9 +63,15 @@ export default {
   created() {
     this.getRetailers()
     this.setParams({
-      retailer: this.$route.query.r ?? null,
-      category: this.$route.query.c ?? null,
-      location: this.$route.query.l ?? null
+      retailer: Array.isArray(this.$route.query.r)
+        ? this.$route.query.r.join(',')
+        : this.$route.query.r || null,
+      category: Array.isArray(this.$route.query.c)
+        ? this.$route.query.c.join(',')
+        : this.$route.query.c || null,
+      location: Array.isArray(this.$route.query.l)
+        ? this.$route.query.l.join(',')
+        : this.$route.query.l || null
     })
     this.getDiscounts()
   },
@@ -71,10 +84,8 @@ export default {
       getRetailers: 'getList'
     })
   }
-}
+})
 </script>
-
-
 
 <style lang="scss" scoped>
 .products-view {
@@ -83,7 +94,7 @@ export default {
 
   h2 {
     margin-top: 16px;
-    margin-bottom: 12px
+    margin-bottom: 12px;
   }
 
   .grid-container {
@@ -104,8 +115,7 @@ export default {
     }
 
     .grid-container__table {
-
-      :deep( .p-dataview) {
+      :deep(.p-dataview) {
         margin-bottom: 60px;
       }
 
@@ -150,5 +160,4 @@ export default {
     padding-right: 8px;
   }
 }
-
 </style>

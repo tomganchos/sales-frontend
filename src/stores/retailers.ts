@@ -8,17 +8,17 @@ type RetailersCounts = {
 }
 
 type RetailersStore = {
-  list: Retailer[],
-  counts: RetailersCounts[],
+  list: Retailer[]
+  counts: RetailersCounts[]
   loading: boolean
 }
 const retailersApi = new RetailersApi()
 
 export const useRetailersStore = defineStore('retailers', {
-  state: () : RetailersStore => ({
+  state: (): RetailersStore => ({
     list: [],
     counts: [],
-    loading: false,
+    loading: false
   }),
   actions: {
     async getList() {
@@ -26,7 +26,9 @@ export const useRetailersStore = defineStore('retailers', {
       this.list = list.data.map((item: Retailer) => {
         return {
           ...item,
-          logo: (import.meta.env.VITE_API_URL) ? `${import.meta.env.VITE_API_URL}${item.logo}` : item.logo,
+          logo: import.meta.env.VITE_API_URL
+            ? `${import.meta.env.VITE_API_URL}${item.logo}`
+            : item.logo
         }
       })
     },

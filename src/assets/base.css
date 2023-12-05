@@ -1,10 +1,8 @@
-/* color palette from <https://github.com/vuejs/theme> */
 :root {
   --background: #f2f2f4;
   --shadow: #f0f0f1;
   --shadow-hover: #ebebea;
   --color-text: #3f3f3f;
-
 
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
@@ -27,35 +25,6 @@
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
 }
 
-/* semantic color variables for this project */
-/*:root {*/
-/*  --color-background: var(--vt-c-white);*/
-/*  --color-background-soft: var(--vt-c-white-soft);*/
-/*  --color-background-mute: var(--vt-c-white-mute);*/
-
-/*  --color-border: var(--vt-c-divider-light-2);*/
-/*  --color-border-hover: var(--vt-c-divider-light-1);*/
-
-/*  --color-heading: var(--vt-c-text-light-1);*/
-/*  --color-text: var(--vt-c-text-light-1);*/
-
-/*  --section-gap: 160px;*/
-/*}*/
-
-/*@media (prefers-color-scheme: dark) {*/
-/*  :root {*/
-/*    --color-background: var(--vt-c-black);*/
-/*    --color-background-soft: var(--vt-c-black-soft);*/
-/*    --color-background-mute: var(--vt-c-black-mute);*/
-
-/*    --color-border: var(--vt-c-divider-dark-2);*/
-/*    --color-border-hover: var(--vt-c-divider-dark-1);*/
-
-/*    --color-heading: var(--vt-c-text-dark-1);*/
-/*    --color-text: var(--vt-c-text-dark-2);*/
-/*  }*/
-/*}*/
-
 *,
 *::before,
 *::after {
@@ -67,10 +36,23 @@ body {
   min-height: 100vh;
   color: var(--color-text);
   background-color: #eff2f3;
-  transition: color 0.5s, background-color 0.5s;
+  transition:
+    color 0.5s,
+    background-color 0.5s;
   line-height: 1.6;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
   font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -78,69 +60,73 @@ body {
 }
 
 .p-inputtext:enabled:hover {
-  border-color: #22C55E;
+  border-color: #22c55e;
 }
 .p-inputtext:enabled:focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 2px #22C55E3F;
-  border-color: #22C55E;
+  box-shadow: 0 0 0 2px #22c55e3f;
+  border-color: #22c55e;
 }
 
 .p-dropdown:hover {
-  border-color: #22C55E !important;
+  border-color: #22c55e !important;
 }
 
 .p-dropdown:not(.p-disabled).p-focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #22C55E3F;
-  border-color: #22C55E;
+  box-shadow: 0 0 0 0.2rem #22c55e3f;
+  border-color: #22c55e;
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
-  background-color: #22C55E3F;
-  color: #22C55E;
+  background-color: #22c55e3f;
+  color: #22c55e;
 }
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight.p-focus {
-  background: #22C55E3F;
+  background: #22c55e3f;
 }
 
 .p-button.p-button-outlined {
-  color: #22C55E;
+  color: #22c55e;
 }
 
 .p-button.p-highlight {
-  background:#22C55E !important;
-  border-color:#22C55E !important;
+  background: #22c55e !important;
+  border-color: #22c55e !important;
 }
 
-.p-button.p-highlight:hover, .p-button.p-highlight:focus {
-  background:#16a34a !important;
-  border-color:#16a34a !important;
+.p-button.p-highlight:hover,
+.p-button.p-highlight:focus {
+  background: #16a34a !important;
+  border-color: #16a34a !important;
 }
 .p-button.p-highlight:active {
-  background:#15803D !important;
-  border-color:#15803D !important;
+  background: #15803d !important;
+  border-color: #15803d !important;
 }
 
 .p-button:focus {
-  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #22C55E, 0 1px 2px 0 black;
+  box-shadow:
+    0 0 0 2px #ffffff,
+    0 0 0 4px #22c55e,
+    0 1px 2px 0 black;
 }
 
 .p-button.p-button-outlined {
   background-color: transparent;
-  color: #22C55E;
+  color: #22c55e;
   border: 1px solid;
 }
 .p-button.p-button-outlined:enabled:hover {
   background: rgba(34, 197, 94, 0.04);
-  color: #22C55E;
+  color: #22c55e;
   border: 1px solid;
 }
 .p-button.p-button-outlined:enabled:active {
   background: rgba(34, 197, 94, 0.16);
-  color: #22C55E;
+  color: #22c55e;
   border: 1px solid;
 }
 

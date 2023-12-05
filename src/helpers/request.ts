@@ -6,7 +6,8 @@ type RequestConstructorParams = {
 }
 
 class Api {
-  private _baseUrl: string;
+  private readonly _baseUrl: string
+  private _axiosInstance: AxiosInstance
 
   constructor({ baseUrl }: RequestConstructorParams) {
     console.log('_baseUrl: %o', baseUrl)
@@ -14,10 +15,8 @@ class Api {
 
     this._axiosInstance = Axios.create({
       baseURL: this._baseUrl
-    });
+    })
   }
-
-
 }
 
 export const Request = new Api({

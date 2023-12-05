@@ -10,27 +10,27 @@
     <span class="p-input-icon-left search">
       <i class="pi pi-search" />
       <InputText
-          size="small"
-          :placeholder="$t('header.search')"
-          severity="success"
-          @keydown.enter="handleSearch($event.target.value)"
+        size="small"
+        :placeholder="$t('header.search')"
+        severity="success"
+        @keydown.enter="handleSearch($event)"
       />
     </span>
     <PButton
-        style="display: none;"
-        class="location"
-        label="Tallinn"
-        size="small"
-        icon="pi pi-map-marker"
-        outlined
+      style="display: none"
+      class="location"
+      label="Tallinn"
+      size="small"
+      icon="pi pi-map-marker"
+      outlined
     />
     <Dropdown
-        v-model="selectedLanguage"
-        :options="languages"
-        optionLabel="name"
-        placeholder="Select a City"
-        class="languages"
-        @change="selectLanguage"
+      v-model="selectedLanguage"
+      :options="languages"
+      optionLabel="name"
+      placeholder="Select a City"
+      class="languages"
+      @change="selectLanguage"
     >
       <template #value="slotProps">
         <div class="suggestion">
@@ -40,25 +40,32 @@
       </template>
     </Dropdown>
     <PButton
-        class="menu"
-        label=""
-        size="small"
-        icon="pi pi-bars"
-        outlined
-        @click="hiddenMenu = !hiddenMenu"
+      class="menu"
+      label=""
+      size="small"
+      icon="pi pi-bars"
+      outlined
+      @click="hiddenMenu = !hiddenMenu"
     />
     <Sidebar v-model:visible="hiddenMenu" position="right">
       <template #closeicon="{ closeCallback }">
-        <PButton type="button" @click="closeCallback" icon="pi pi-times" rounded outlined class="h-2rem w-2rem"></PButton>
+        <PButton
+          type="button"
+          @click="closeCallback"
+          icon="pi pi-times"
+          rounded
+          outlined
+          class="h-2rem w-2rem"
+        ></PButton>
       </template>
 
       <Dropdown
-          v-model="selectedLanguage"
-          :options="languages"
-          optionLabel="name"
-          placeholder="Select a City"
-          class="languages-hidden"
-          @change="selectLanguage"
+        v-model="selectedLanguage"
+        :options="languages"
+        optionLabel="name"
+        placeholder="Select a City"
+        class="languages-hidden"
+        @change="selectLanguage"
       >
         <template #value="slotProps">
           <div class="suggestion">
@@ -71,11 +78,11 @@
   </header>
 </template>
 
-<script>
+<script lang="ts">
 import InputText from 'primevue/inputtext'
 import Dropdown from 'primevue/dropdown'
 import Sidebar from 'primevue/sidebar'
-import { default as PButton }  from 'primevue/button'
+import { default as PButton } from 'primevue/button'
 import { useDiscountsStore } from '@/stores/discounts'
 import { mapActions } from 'pinia'
 
@@ -85,7 +92,7 @@ export default {
     InputText,
     Dropdown,
     PButton,
-    Sidebar,
+    Sidebar
   },
   data() {
     return {
@@ -99,22 +106,27 @@ export default {
     }
   },
   mounted() {
-    this.selectedLanguage = this.languages.find(item => item.value === this.$i18n.locale)
+    this.selectedLanguage =
+      this.languages.find((item) => item.value === this.$i18n.locale) || this.languages[0]
   },
   methods: {
     ...mapActions(useDiscountsStore, {
       setParams: 'setParams',
       getDiscounts: 'getList'
     }),
-    selectLanguage(value) {
-      this.$i18n.locale = value.value.value
+    selectLanguage() {
+      this.$i18n.locale = this.selectedLanguage.value
+
+      console.log('this.$i18n.locale: %o', this.$i18n.locale)
     },
     routeToHome() {
       this.$router.push({ name: 'home' })
     },
-    handleSearch(value) {
+    handleSearch(event: KeyboardEvent) {
+      const target = event.target as HTMLInputElement
+      const value = target.value as string
       this.setParams({
-        term: value ? value : null
+        term: value || null
       })
       this.getDiscounts()
     }
@@ -143,13 +155,13 @@ header {
     height: 48px;
     width: 48px;
     min-width: 48px;
-    background-color: #22C55E;
+    background-color: #22c55e;
     color: #ffffff;
     border-radius: 50%;
     cursor: pointer;
 
     img {
-      width: 100%
+      width: 100%;
     }
   }
   h1.name {
@@ -177,14 +189,13 @@ header {
   display: none;
 }
 
-
 .languages {
   height: 42px;
   display: none;
   align-items: center;
   width: 120px;
 
-  :deep( .p-dropdown-trigger) {
+  :deep(.p-dropdown-trigger) {
     display: none;
   }
 

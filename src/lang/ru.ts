@@ -78,9 +78,9 @@ export default {
     dumplings_and_vareniki: 'Пельмени и вареники',
     vegetables_and_berries: 'Овощи и ягоды',
     desserts: 'Десерты',
-    'semi_finished_products': 'Полуфабрикаты',
+    semi_finished_products: 'Полуфабрикаты',
     fish_and_seafood_freezing: 'Рыба и морепродукты',
-    'ice_and_something_else': 'Лёд и ещё что-то',
+    ice_and_something_else: 'Лёд и ещё что-то',
 
     groceries: 'Бакалея',
     pasta_cereals_and_flour: 'Макароны, крупы и мука',
@@ -95,7 +95,7 @@ export default {
     water_and_drinks_for_children: 'Вода и напитки для детей',
     hygiene_and_care: 'Гигиена и уход',
 
-    'pets_section': 'Для животных',
+    pets_section: 'Для животных',
     for_cats: 'Для кошек',
     for_dogs: 'Для собак'
   }

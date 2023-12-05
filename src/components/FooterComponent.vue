@@ -1,13 +1,10 @@
 <template>
-  <footer>
-    <span>© </span><strong>Hind</strong>ikutsikas, 2023
-  </footer>
+  <footer><span>© </span><strong>Hind</strong>ikutsikas, 2023</footer>
 </template>
 
-<script>
-
+<script lang="ts">
 export default {
-  name: "FooterComponent"
+  name: 'FooterComponent'
 }
 </script>
 

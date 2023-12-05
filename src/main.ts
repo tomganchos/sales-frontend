@@ -1,9 +1,8 @@
-
 import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import i18n from '@/lang/i18n.js'
+import i18n from '@/lang/i18n'
 
 import PrimeVue from 'primevue/config'
 

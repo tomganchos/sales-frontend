@@ -1,18 +1,18 @@
 <template class="app">
-  <HeaderComponent/>
+  <HeaderComponent />
 
-  <RouterView class="main"/>
+  <RouterView class="main" />
 
-  <FooterComponent/>
+  <FooterComponent />
 </template>
 
 <script lang="ts">
 import { RouterView } from 'vue-router'
 import HeaderComponent from '@/components/HeaderComponent.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
-import {mapActions} from "pinia";
-import {useRetailersStore} from "@/stores/retailers";
-import {useCategoriesStore} from "@/stores/categories";
+import { mapActions } from 'pinia'
+import { useRetailersStore } from '@/stores/retailers'
+import { useCategoriesStore } from '@/stores/categories'
 
 export default {
   name: 'App',
@@ -22,7 +22,7 @@ export default {
     RouterView
   },
 
-  mounted () {
+  mounted() {
     console.log('process.env: %o', import.meta.env)
   },
   methods: {
@@ -31,33 +31,31 @@ export default {
     }),
     ...mapActions(useCategoriesStore, {
       getCategories: 'getList'
-    }),
+    })
   }
 }
 </script>
 
-
-
 <style lang="scss" scoped>
+.main {
+  margin: auto;
+}
+
+@media screen and (min-width: 0) {
   .main {
-    margin: auto;
+    max-width: 288px;
   }
+}
 
-  @media screen and (min-width: 0) {
-    .main {
-      max-width: 288px;
-    }
+@media screen and (min-width: 800px) {
+  .main {
+    max-width: 720px;
   }
+}
 
-  @media screen and (min-width: 800px) {
-    .main {
-      max-width: 720px;
-    }
+@media screen and (min-width: 1240px) {
+  .main {
+    max-width: 1160px;
   }
-
-  @media screen and (min-width: 1240px) {
-    .main {
-      max-width: 1160px;
-    }
-  }
+}
 </style>

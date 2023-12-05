@@ -77,7 +77,7 @@ export default {
     dumplings_and_vareniki: 'Pelmeenid ja varenikud',
     vegetables_and_berries: 'Köögiviljad ja marjad',
     desserts: 'Magustoidud',
-    'semi_finished_products': 'Pooltooted',
+    semi_finished_products: 'Pooltooted',
     fish_and_seafood_freezing: 'Kala ja mereannid',
     ice_and_something_else: 'Jää ja mõned muud asjad',
 
@@ -97,6 +97,5 @@ export default {
     pets_section: 'Loomade jaoks',
     for_cats: 'Kassidele',
     for_dogs: 'Koertele'
-
   }
 }

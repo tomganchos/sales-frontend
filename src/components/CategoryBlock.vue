@@ -1,42 +1,33 @@
 <template>
   <Skeleton
-      v-if="skeleton"
-      :width="styles.width"
-      :height="styles.height"
-      :borderRadius="styles.borderRadius"
+    v-if="skeleton"
+    :width="styles.width"
+    :height="styles.height"
+    :borderRadius="styles.borderRadius"
   />
   <div
-      v-else
-      ref="category"
-      :key="item.id"
-       :style="{ backgroundColor: item.color }"
-       class="category">
-    <span class="label"
-          v-if="label">
+    v-else
+    ref="category"
+    :key="item.id"
+    :style="{ backgroundColor: item.color }"
+    class="category"
+  >
+    <span class="label" v-if="label">
       {{ $t(`categories.${item.name}`) }}
     </span>
-    <img v-if="item.logo"
-         class="logo"
-        :src="item.logo"
-        :alt="item.name"
-    >
-    <img v-else-if="item.image"
-         class="image"
-        :src="item.image"
-        :alt="item.name"
-         >
-    <span class="description"
-          v-if="description">
+    <img v-if="item.logo" class="logo" :src="item.logo" :alt="item.name" />
+    <img v-else-if="item.image" class="image" :src="item.image" :alt="item.name" />
+    <span class="description" v-if="description">
       {{ item.discountCount }} {{ $t('retailers.promotions') }}
     </span>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Skeleton from 'primevue/skeleton'
 
 export default {
-  name: "CategoryBlock",
+  name: 'CategoryBlock',
   components: {
     Skeleton
   },
@@ -131,7 +122,8 @@ export default {
     left: 2px;
   }
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     box-shadow: 0 0 16px 8px #e3e3e4;
   }
 }
@@ -170,5 +162,4 @@ export default {
     }
   }
 }
-
 </style>

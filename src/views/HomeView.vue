@@ -1,54 +1,53 @@
 <template>
-    <main class="home-view">
-
-      <div class="categories">
-        <h2>{{ $t("retailers.title") }}</h2>
-        <div class="category-list">
-          <CategoryBlock
-              v-for="retailer in cRetailers"
-              :key="retailer.id"
-              :item="retailer"
-              :skeleton="!retailer.id"
-              description
-              @click="handleRetailerClick(retailer)"
-          />
-        </div>
+  <main class="home-view">
+    <div class="categories">
+      <h2>{{ $t('retailers.title') }}</h2>
+      <div class="category-list">
+        <CategoryBlock
+          v-for="retailer in cRetailers"
+          :key="retailer.id"
+          :item="retailer"
+          :skeleton="!retailer.id"
+          description
+          @click="handleRetailerClick(retailer)"
+        />
       </div>
+    </div>
 
-      <div class="categories">
-        <h2>{{ $t("categories.title") }}</h2>
-        <div class="category-list">
-          <CategoryBlock
-              v-for="category in cCategories"
-              :key="category.id"
-              :item="category"
-              :skeleton="!category.id"
-              label
-              @click="handleCategoryClick(category)"
-          />
-        </div>
+    <div class="categories">
+      <h2>{{ $t('categories.title') }}</h2>
+      <div class="category-list">
+        <CategoryBlock
+          v-for="category in cCategories"
+          :key="category.id"
+          :item="category"
+          :skeleton="!category.id"
+          label
+          @click="handleCategoryClick(category)"
+        />
       </div>
-
-    </main>
+    </div>
+  </main>
 </template>
 
 <script lang="ts">
-
+import { defineComponent } from 'vue'
+import { mapActions, mapState } from 'pinia'
 import CategoryBlock from '@/components/CategoryBlock.vue'
-import {mapActions, mapState} from "pinia";
-import {useRetailersStore} from "@/stores/retailers";
-import {useCategoriesStore} from "@/stores/categories";
+import { useRetailersStore } from '@/stores/retailers'
+import { useCategoriesStore } from '@/stores/categories'
+import type { Retailer } from '@/helpers/interfaces/Retailer'
+import type { Category } from '@/helpers/interfaces/Category'
 
-export default {
+export default defineComponent({
   name: 'HomeView',
   components: {
     CategoryBlock
-
   },
-  data () {
+  data() {
     return {
-      emptyRetailers: [{}, {}, {}, {}, {}, {}, {}, {}],
-      emptyCategories: [{}, {}, {}, {}, {}, {}, {}, {}],
+      emptyRetailers: Array(8).fill({} as Retailer),
+      emptyCategories: Array(8).fill({} as Category)
     }
   },
   computed: {
@@ -59,7 +58,7 @@ export default {
     ...mapState(useCategoriesStore, {
       categories: 'mainList'
     }),
-    cRetailers () {
+    cRetailers() {
       if (this.retailers.length > 0) {
         if (this.counts) {
           return this.retailers.map((retailer: any) => {
@@ -78,7 +77,7 @@ export default {
         return this.emptyRetailers
       }
     },
-    cCategories () {
+    cCategories() {
       if (this.categories.length > 0) {
         return this.categories
       } else {
@@ -87,10 +86,10 @@ export default {
     }
   },
   created() {
-    if(!this.retailers.length) {
+    if (!this.retailers.length) {
       this.getRetailers()
     }
-    if(!this.categories.length) {
+    if (!this.categories.length) {
       this.getCategories()
     }
     if (!this.counts.length) {
@@ -107,18 +106,17 @@ export default {
     }),
     handleRetailerClick(retailer: any) {
       console.log('retailer: %o', retailer)
-      this.$router.push({ name: 'products', query: { r: retailer.id }})
+      this.$router.push({ name: 'products', query: { r: retailer.id } })
     },
     handleCategoryClick(category: any) {
       console.log('category: %o', category)
-      this.$router.push({ name: 'products', query: { c: category.id }})
+      this.$router.push({ name: 'products', query: { c: category.id } })
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
-
 .home-view {
   margin: auto;
   padding-top: 72px;
@@ -135,8 +133,6 @@ export default {
       display: flex;
       flex-wrap: wrap;
       gap: 48px 24px;
-
-
     }
   }
 }
@@ -160,7 +156,6 @@ export default {
 @media screen and (min-width: 1240px) {
   .home-view {
     .categories {
-
       h2 {
         font-size: 24px;
       }
@@ -171,5 +166,4 @@ export default {
     }
   }
 }
-
 </style>

@@ -1,13 +1,62 @@
+<template>
+  <main class="product-view">
+    <div class="back-button" @click="handleBack">&#60; Вернуться назад</div>
+    <Card>
+      <template #content>
+        <img
+          class="image"
+          v-if="discount"
+          :src="discount.product.image"
+          :alt="discount.product.name_ee"
+        />
+        <Skeleton v-else class="skeleton-image" />
+        <div class="context">
+          <div v-if="discount" class="info">
+            <div class="retailer">
+              <img
+                class="retailer-logo"
+                :src="discount.retailer.logo"
+                :alt="discount.retailer.name"
+                :style="{ background: discount.retailer.color }"
+              />
+              <span class="retailer-name">{{ discount.retailer.name }}</span>
+              <span class="retailer-condition">{{ discount.condition }}</span>
+            </div>
+            <div class="date">
+              {{ getDate(discount.date_end) }}
+            </div>
+          </div>
+          <div v-if="discount" class="name">
+            {{ discount.product.name_ee }}
+          </div>
+          <div v-if="discount" class="translate">
+            {{ discount.product.name_ru }}
+          </div>
+          <div v-if="discount" class="price">
+            <span class="new"> {{ discount.price_with_sale }}€ </span>
+            <span class="discount"> -{{ discount.discount_percentage }}% </span>
+            <span class="old"> {{ discount.price_without_sale }}€ </span>
+          </div>
+        </div>
+      </template>
+    </Card>
+
+    <div class="same-list" style="display: none">
+      <h2 style="margin-top: 20px; margin-bottom: 16px; font-size: 24px">Похожие товары</h2>
+    </div>
+  </main>
+</template>
+
 <script lang="ts">
-import {defineComponent} from 'vue'
-import {mapActions, mapState} from 'pinia'
-import {useDiscountsStore} from '@/stores/discounts'
+import { defineComponent } from 'vue'
+import { mapActions, mapState } from 'pinia'
+import { useDiscountsStore } from '@/stores/discounts'
 import { DateTime } from 'luxon'
 import Card from 'primevue/card'
 import Skeleton from 'primevue/skeleton'
 
 export default defineComponent({
-  name: "ProductView",
+  name: 'ProductView',
   components: {
     Card,
     Skeleton
@@ -27,10 +76,13 @@ export default defineComponent({
     ...mapActions(useDiscountsStore, {
       getDiscount: 'getDiscount'
     }),
-    getDate(date) {
+    getDate(date: string) {
       const d = new Date(date)
-      return this.$t(`products.until`) + ' ' +
-          DateTime.fromJSDate(d).setLocale(this.$i18n.locale).toFormat('dd MMM')
+      return (
+        this.$t(`products.until`) +
+        ' ' +
+        DateTime.fromJSDate(d).setLocale(this.$i18n.locale).toFormat('dd MMM')
+      )
     },
     handleBack() {
       this.$router.push({ name: 'products' })
@@ -38,65 +90,6 @@ export default defineComponent({
   }
 })
 </script>
-
-<template>
-  <main class="product-view">
-    <div class="back-button" @click="handleBack">&#60; Вернуться назад</div>
-    <Card>
-      <template #content>
-        <img
-            class="image"
-            v-if="discount"
-            :src="discount.product.image"
-            :alt="discount.product.name_ee"
-        />
-        <Skeleton v-else class="skeleton-image" />
-        <div class="context">
-          <div v-if="discount" class="info">
-            <div class="retailer">
-              <img class="retailer-logo"
-                   :src="discount.retailer.logo"
-                   :alt="discount.retailer.name"
-                   :style="{ background: discount.retailer.color }"
-              />
-              <span class="retailer-name">{{ discount.retailer.name }}</span>
-              <span class="retailer-condition">{{ discount.condition }}</span>
-            </div>
-            <div class="date">
-              {{ getDate(discount.date_end) }}
-            </div>
-          </div>
-          <div v-if="discount" class="name">
-            {{ discount.product.name_ee }}
-          </div>
-          <div v-if="discount" class="translate">
-            {{ discount.product.name_ru }}
-          </div>
-          <div v-if="discount" class="price">
-          <span class="new">
-            {{ discount.price_with_sale }}€
-          </span>
-            <span class="discount">
-            -{{ discount.discount_percentage }}%
-          </span>
-            <span class="old">
-            {{ discount.price_without_sale }}€
-          </span>
-          </div>
-        </div>
-      </template>
-    </Card>
-
-    <div class="same-list" style="display: none;">
-      <h2
-          style="margin-top: 20px; margin-bottom: 16px; font-size: 24px"
-      >
-        Похожие товары
-      </h2>
-
-    </div>
-  </main>
-</template>
 
 <style scoped lang="scss">
 .product-view {
@@ -131,7 +124,10 @@ export default defineComponent({
 
       img {
         width: 256px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03), 0 0 2px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.12);
+        box-shadow:
+          0 4px 10px rgba(0, 0, 0, 0.03),
+          0 0 2px rgba(0, 0, 0, 0.06),
+          0 2px 6px rgba(0, 0, 0, 0.12);
         border-radius: 8px;
       }
 
@@ -150,7 +146,10 @@ export default defineComponent({
           width: 28px;
           min-width: 28px;
           object-fit: contain;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03), 0 0 2px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.12);
+          box-shadow:
+            0 4px 10px rgba(0, 0, 0, 0.03),
+            0 0 2px rgba(0, 0, 0, 0.06),
+            0 2px 6px rgba(0, 0, 0, 0.12);
           border-radius: 8px;
         }
         &-name {
@@ -187,7 +186,10 @@ export default defineComponent({
           font-weight: 700;
           padding: 4px 8px;
           border-radius: 8px;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03), 0 0 2px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+          box-shadow:
+            0 4px 10px rgba(0, 0, 0, 0.03),
+            0 0 2px rgba(0, 0, 0, 0.06),
+            0 2px 6px rgba(0, 0, 0, 0.12) !important;
         }
         .old {
           color: #aaa;

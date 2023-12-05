@@ -1,19 +1,19 @@
 import { defineStore } from 'pinia'
-import CategoriesApi from '@/api/categories.ts'
-import type { Category } from '@/helpers/interfaces/Category.ts'
+import CategoriesApi from '@/api/categories'
+import type { Category } from '@/helpers/interfaces/Category'
 
 type CategoriesStore = {
-  mainList: Category[],
-  list: Category[],
+  mainList: Category[]
+  list: Category[]
   loading: boolean
 }
 const categoriesApi = new CategoriesApi()
 
 export const useCategoriesStore = defineStore('categories', {
-  state: () : CategoriesStore => ({
+  state: (): CategoriesStore => ({
     mainList: [],
     list: [],
-    loading: false,
+    loading: false
   }),
   actions: {
     async getList() {
@@ -21,15 +21,21 @@ export const useCategoriesStore = defineStore('categories', {
       this.list = list.data.map((item: Category) => {
         return {
           ...item,
-          image: (import.meta.env.VITE_API_URL) ? `${import.meta.env.VITE_API_URL}${item.image}` : item.image,
+          image: import.meta.env.VITE_API_URL
+            ? `${import.meta.env.VITE_API_URL}${item.image}`
+            : item.image
         }
       })
-      this.mainList = list.data.filter(item => item.parent_id === null).map((item: Category) => {
-        return {
-          ...item,
-          image: (import.meta.env.VITE_API_URL) ? `${import.meta.env.VITE_API_URL}${item.image}` : item.image,
-        }
-      })
+      this.mainList = list.data
+        .filter((item: Category) => item.parent_id === null)
+        .map((item: Category) => {
+          return {
+            ...item,
+            image: import.meta.env.VITE_API_URL
+              ? `${import.meta.env.VITE_API_URL}${item.image}`
+              : item.image
+          }
+        })
     }
   }
 })

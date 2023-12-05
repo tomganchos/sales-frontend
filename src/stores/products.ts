@@ -3,19 +3,19 @@ import ProductsApi from '@/api/products'
 import type { Product } from '@/helpers/interfaces/Product'
 
 type ProductsStore = {
-  list: Product[],
+  list: Product[]
   loading: boolean
 }
 const productsApi = new ProductsApi()
 
 export const useProductsStore = defineStore('products', {
-  state: () : ProductsStore => ({
+  state: (): ProductsStore => ({
     list: [],
-    loading: false,
+    loading: false
   }),
   actions: {
     async getList() {
-      const { data } = await productsApi.getProducts(this.params)
+      const { data } = await productsApi.getProducts()
       console.log('list: %o', data)
       this.list = data
       console.log('list: %o', this.list)
